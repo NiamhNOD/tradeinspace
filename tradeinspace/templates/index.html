@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Welcome
+{% endblock %}
+{% block main %}
+	<p>Welcome to my first real attempt at making something; a dodgy space trading game built on Flask.</p>
+	<br />
+	<p><a href="{{ url_for('createUniverse') }}"> Run the first time to create the universe.</a></p>
+{% endblock %}

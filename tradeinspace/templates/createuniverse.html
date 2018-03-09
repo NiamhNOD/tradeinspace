@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Universe
+{% endblock %}
+{% block main %}
+	<form action="{{ url_for('createUniverse') }}"" method="post">
+		<input type="submit" value="Create Universe">
+	</form>
+{% endblock %}
