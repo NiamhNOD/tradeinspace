@@ -16,3 +16,13 @@ def createUniverse():
 		return render_template("universecreated.html")
 	else:
 		return render_template("createuniverse.html")
+
+@app.route('/planet.html')
+def planet1():
+	worlds = planetlist.planetList()
+	return render_template("planet.html", worldsList = worlds)
+
+@app.route('/planet/<planet>.html')
+def planet(planet):
+	prices = planetlist.planetPrice(planet)
+	return render_template('planetprices.html', planet=planet, prices=prices)

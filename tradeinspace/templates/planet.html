@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Welcome
+{% endblock %}
+{% block main %}
+	<ul>
+			{% for world in worldsList %}
+					<li><a href={{ url_for('planet', planet=world.worldname) }}>{{ world.worldname }}</a></li>
+			{% endfor %}
+	</li>
+{% endblock %}

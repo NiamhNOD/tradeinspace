@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	{{ planet }}
+{% endblock %}
+{% block main %}
+  <table>
+	   <tr>
+       <th>Product ID</th>
+       <th>Product Name</th>
+       <th>Amount available</th>
+       <th>Price</th>
+     </tr>
+     {% for price in prices %}
+     <tr>
+      	<td>{{ price.productsid }}</td>
+        <td>{{ price.product }}</td>
+        <td>{{ price.amount}}</td>
+        <td>€{{price.price / 100}}<td>
+      <tr>
+		{% endfor %}
+	</table>
+{% endblock %}
