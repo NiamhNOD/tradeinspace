@@ -2,10 +2,12 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 import tradeinspace.createdb
+import tradeinspace.planetlist
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	worlds = planetlist.planetList()
+	return render_template("index.html", worldsList = worlds)
 
 @app.route("/createuniverse.html", methods=["GET", "POST"])
 def createUniverse():
