@@ -61,7 +61,3 @@ def createWorld():
 			price = WorldPrices(worldid = x + 1, productsid = y + 1, price = price, amount = amount)
 			db.session.add(price)
 	db.session.commit()
-
-def planetList():
-    worlds = World.query.order_by(World.worldname).all()
-    return worlds
