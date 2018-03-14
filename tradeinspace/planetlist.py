@@ -15,4 +15,8 @@ def planetList():
 def planetPrice(worldname):
     world = World.query.filter_by(worldname=worldname).first()
     worldid = str(world.worldid)
-    return WorldPrices.query.join(Products, WorldPrices.productsid==Products.productid).add_columns(Products.product, WorldPrices.productsid, WorldPrices.worldid, WorldPrices.price, WorldPrices.amount).filter(WorldPrices.worldid == worldid).all()
+    return WorldPrices.query.join(Products,
+        WorldPrices.productsid==Products.productid).add_columns(Products.product,
+        WorldPrices.productsid, WorldPrices.worldid,
+        WorldPrices.price, WorldPrices.amount).filter(WorldPrices.worldid ==
+        worldid).all()

@@ -1,7 +1,9 @@
 from tradeinspace import app
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask.ext.bcrypt import Bcrypt
 import random
+import uuid
 
 # setup the postgres database location
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost/tradeinspace"
@@ -10,10 +12,20 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # open the connection to the database
 db = SQLAlchemy(app)
 
+# connect Bcrypt
+bycrypt_app = Bcrypt(app)
+
+# create the class for the player
+class Player(db.Model):
+	playerid = db.Column(db.Integer, primary_key=True)
+	playername = db.Column(db.String(80), unique=True, nullable=False)
+	playerpassword = db.Column(db.String, nullable=False)
+	playersalt = db.Column(db.String)
+
 # create the class for world names
 class World(db.Model):
 	worldid = db.Column(db.Integer, primary_key=True)
-	worldname = db.Column(db.String(80), unique =True, nullable=False)
+	worldname = db.Column(db.String(80), unique=True, nullable=False)
 
 # create the class for product details
 class Products(db.Model):
@@ -33,7 +45,7 @@ class WorldPrices(db.Model):
 
 # create the database
 def createWorld():
-
+	db.drop_all()
 	# create the database tables
 	db.create_all()
 
@@ -58,6 +70,15 @@ def createWorld():
 		for y in range(len(productList)):
 			price = int(productList[y][3] * random.uniform(0.75, 1.25))
 			amount = random.randrange(50, 150)
-			price = WorldPrices(worldid = x + 1, productsid = y + 1, price = price, amount = amount)
-			db.session.add(price)
+			priceentry = WorldPrices(worldid = x + 1, productsid = y + 1, price = price, amount = amount)
+			db.session.add(priceentry)
+	db.session.commit()
+
+	# create the default user
+	playeruuid = str(uuid.uuid4())
+	playerpasswordraw = str(12345678)
+	playerasswordsalt = playerpasswordraw + playeruuid
+	playerpassword = bcrypt_app.generate_password_hash(playerpasswordsalt)
+	user = Player(playername = Admin, playerpassword = playerpassword 12345678, playersalt = playeruuid)
+	db.session.add(user)
 	db.session.commit()
